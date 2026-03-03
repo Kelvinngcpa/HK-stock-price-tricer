@@ -1,3 +1,4 @@
+# Refresh dashboard data daily and commit so GitHub Pages serves updated JSON/charts.
 name: Update HK Stock Prices
 
 on:
