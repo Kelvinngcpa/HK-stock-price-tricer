@@ -1,0 +1,35 @@
+yaml
+name: Update HK Stock Prices
+
+on:
+  schedule:
+    # Runs at 9 AM Hong Kong time every day (1 AM UTC)
+    - cron: '0 1 * * *'
+  workflow_dispatch:  # Allows you to run it manually
+
+jobs:
+  update-prices:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      
+      - name: Run stock price script
+        run: python get_stock_prices.py
+      
+      - name: Commit and push if changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add latest_prices.txt
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update stock prices"
+          git push
