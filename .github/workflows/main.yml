@@ -33,3 +33,7 @@ jobs:
           git add latest_prices.txt
           git diff --quiet && git diff --staged --quiet || git commit -m "Update stock prices"
           git push
+          git config --global user.email 'github-actions@github.com'
+          git add latest_prices.txt
+          git diff --quiet && git diff --staged --quiet || git commit -m "Update stock prices"
+          git push
